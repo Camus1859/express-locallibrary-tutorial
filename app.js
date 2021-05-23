@@ -10,6 +10,8 @@ var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 var compression = require('compression');
 var helmet = require('helmet');
+var app = express();
+
 
 app.use(compression())
 app.use(helmet());
@@ -18,9 +20,11 @@ app.use(helmet());
 
 
 
-var app = express();
 
-var mongoDB = 'mongodb+srv://dbUser:camus123@cluster0.1xmzs.mongodb.net/local_library?retryWrites=true&w=majority'
+//var mongoDB = 'mongodb+srv://dbUser:camus123@cluster0.1xmzs.mongodb.net/local_library?retryWrites=true&w=majority'
+
+var dev_db_url =  'mongodb+srv://dbUser:camus123@cluster0.1xmzs.mongodb.net/local_library?retryWrites=true&w=majority'
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
